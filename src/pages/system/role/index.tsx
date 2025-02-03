@@ -9,12 +9,12 @@ import { useCommonStore } from '@/hooks/useCommonStore';
 import { ADD_TITLE, EDIT_TITLE, INIT_PAGINATION } from '@/utils/config';
 import { UpdateBtn, DeleteBtn } from '@/components/Buttons';
 import {
-  getMenuPage,
-  getMenuById,
-  createMenu,
-  updateMenu,
-  deleteMenu
-} from '@/servers/system/menu';
+  getSystemRolePage,
+  getSystemRoleById,
+  createSystemRole,
+  updateSystemRole,
+  deleteSystemRole
+} from '@/servers/system/role';
 import BaseContent from '@/components/Content/BaseContent';
 import BaseSearch from '@/components/Search/BaseSearch';
 import BaseModal from '@/components/Modal/BaseModal';
@@ -29,17 +29,16 @@ interface RowData {
 }
 
 // 初始化新增数据
-const initCreate = {
-  status: 1
-};
+const initCreate = {};
 
-function Page() {
+function SystemRole() {
   const { t } = useTranslation();
+  const { permissions } = useCommonStore();
   const createFormRef = useRef<FormInstance>(null);
   const columns = tableColumns(t, optionRender);
   const [isFetch, setFetch] = useState(false);
-  const [isCreateOpen, setCreateOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isCreateOpen, setCreateOpen] = useState(false);
   const [isCreateLoading, setCreateLoading] = useState(false);
   const [createTitle, setCreateTitle] = useState(ADD_TITLE(t));
   const [createId, setCreateId] = useState('');
@@ -50,10 +49,9 @@ function Page() {
   const [total, setTotal] = useState(0);
   const [tableData, setTableData] = useState<FormData[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
-  const { permissions } = useCommonStore();
 
   // 权限前缀
-  const permissionPrefix = '/system/menu';
+  const permissionPrefix = '/system/role';
 
   // 权限
   const pagePermission: PagePermission = {
@@ -69,7 +67,7 @@ function Page() {
 
     try {
       setLoading(true);
-      const res = await getMenuPage(params);
+      const res = await getSystemRolePage(params);
       const { code, data } = res;
       if (Number(code) !== 200) return;
       const { items, total } = data;
@@ -98,8 +96,6 @@ function Page() {
   // 首次进入自动加载接口数据
   useEffect(() => {
     if (pagePermission.page) getPage();
-    // TODO: 重复请求测试，可删
-    if (pagePermission.page) getPage();
   }, [getPage, pagePermission.page]);
 
   /** 点击新增 */
@@ -120,7 +116,7 @@ function Page() {
       setCreateTitle(EDIT_TITLE(t, id));
       setCreateId(id);
       setCreateLoading(true);
-      const { code, data } = await getMenuById(id);
+      const { code, data } = await getSystemRoleById(id);
       if (Number(code) !== 200) return;
       setCreateData(data);
     } finally {
@@ -145,7 +141,7 @@ function Page() {
   const handleCreate = async (values: FormData) => {
     try {
       setCreateLoading(true);
-      const functions = () => createId ? updateMenu(createId, values) : createMenu(values);
+      const functions = () => createId ? updateSystemRole(createId, values) : createSystemRole(values);
       const { code, message } = await functions();
       if (Number(code) !== 200) return;
       messageApi.success(message || t('public.successfulOperation'));
@@ -163,7 +159,7 @@ function Page() {
   const onDelete = async (id: string) => {
     try {
       setLoading(true);
-      const { code, message } = await deleteMenu(id);
+      const { code, message } = await deleteSystemRole(id);
       if (Number(code) === 200) {
         messageApi.success(message || t('public.successfullyDeleted'));
         getPage();
@@ -251,7 +247,7 @@ function Page() {
       >
         <BaseForm
           ref={createFormRef}
-          list={createList(t, createId)}
+          list={createList(t)}
           data={createData}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 19 }}
@@ -262,4 +258,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default SystemRole;

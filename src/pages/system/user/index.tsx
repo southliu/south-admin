@@ -65,7 +65,7 @@ function Page() {
   const { permissions } = useCommonStore();
 
   // 权限前缀
-  const permissionPrefix = '/authority/user';
+  const permissionPrefix = '/system/user';
 
   // 权限
   const pagePermission: PagePermission = {

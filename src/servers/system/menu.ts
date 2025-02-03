@@ -5,7 +5,7 @@ import type { PageServerResult, PaginationData, SideMenu } from '#/public';
 import { request } from '@/utils/request';
 
 enum API {
-  URL = '/authority/menu'
+  URL = '/system/menu'
 }
 
 /**

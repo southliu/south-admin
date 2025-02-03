@@ -3,14 +3,14 @@ import type { PageServerResult, PaginationData } from '#/public';
 import { request } from '@/utils/request';
 
 enum API {
-  URL = '/system/user'
+  URL = '/system/role'
 }
 
 /**
  * 获取分页数据
  * @param data - 请求数据
  */
-export function getUserPage(data: Partial<FormData> & PaginationData) {
+export function getSystemRolePage(data: Partial<FormData> & PaginationData) {
   return request.get<PageServerResult<FormData[]>>(
     `${API.URL}/page`,
     { params: data }
@@ -21,7 +21,7 @@ export function getUserPage(data: Partial<FormData> & PaginationData) {
  * 根据ID获取数据
  * @param id - ID
  */
-export function getUserById(id: string) {
+export function getSystemRoleById(id: string) {
   return request.get<FormData>(`${API.URL}/detail?id=${id}`);
 }
 
@@ -29,7 +29,7 @@ export function getUserById(id: string) {
  * 新增数据
  * @param data - 请求数据
  */
-export function createUser(data: FormData) {
+export function createSystemRole(data: FormData) {
   return request.post(API.URL, data);
 }
 
@@ -38,7 +38,7 @@ export function createUser(data: FormData) {
  * @param id - 修改id值
  * @param data - 请求数据
  */
-export function updateUser(id: string, data: FormData) {
+export function updateSystemRole(id: string, data: FormData) {
   return request.put(`${API.URL}/${id}`, data);
 }
 
@@ -46,15 +46,6 @@ export function updateUser(id: string, data: FormData) {
  * 删除
  * @param id - 删除id值
  */
-export function deleteUser(id: string) {
+export function deleteSystemRole(id: string) {
   return request.delete(`${API.URL}/${id}`);
 }
-
-/**
- * 批量删除
- * @param data - 请求数据
- */
-export function batchDeleteUser(data: FormData) {
-  return request.post(`${API.URL}/batchDelete`, data);
-}
-

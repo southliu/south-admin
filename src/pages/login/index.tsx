@@ -117,6 +117,7 @@ function Login() {
 
     // 有权限则直接跳转
     const firstMenu = getFirstMenu(menuData, permissions);
+    console.log('firstMenu', firstMenu);
     if (!firstMenu) {
       return messageApi.error({ content: t('login.notPermissions'), key: 'permissions' });
     }

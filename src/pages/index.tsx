@@ -13,6 +13,7 @@ function Page() {
   /** 跳转第一个有效菜单路径 */
   const goFirstMenu = useCallback(() => {
     const firstMenu = getFirstMenu(menuList, permissions);
+    console.log('firstMenu', firstMenu);
     navigate(firstMenu);
   }, [menuList, navigate, permissions]);
 
