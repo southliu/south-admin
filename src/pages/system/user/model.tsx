@@ -4,32 +4,18 @@ import type { TableColumn, TableOptions } from '#/public';
 import { FORM_REQUIRED } from '@/utils/config';
 import { OPEN_CLOSE } from '@/utils/constants';
 
-const otherSearch: SearchList[] = [];
-
-for (let i = 0; i < 32; i++) {
-  otherSearch.push({
-    label: `名称${i + 1}`,
-    name: `label${i + 1}`,
-    component: 'Input',
-    componentProps: {
-      maxLength: 200
-    }
-  });
-}
-
 // 搜索数据
 export const searchList = (t: TFunction): SearchList[] => [
   {
-    label: t('system.age'),
-    name: 'age',
-    component: 'InputNumber'
+    label: t('login.username'),
+    name: 'username',
+    component: 'Input'
   },
   {
     label: t('public.name'),
     name: 'keyword',
     component: 'Input'
   },
-  ...otherSearch,
 ];
 
 /**

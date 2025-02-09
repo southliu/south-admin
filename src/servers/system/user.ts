@@ -3,7 +3,7 @@ import type { PageServerResult, PaginationData } from '#/public';
 import { request } from '@/utils/request';
 
 enum API {
-  URL = '/system/user'
+  URL = '/user'
 }
 
 /**
